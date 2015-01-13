@@ -17,6 +17,7 @@ set(SRCS
             arm/skyeye_common/vfp/vfpdouble.cpp
             arm/skyeye_common/vfp/vfpinstr.cpp
             arm/skyeye_common/vfp/vfpsingle.cpp
+            debugger/debug_interface.cpp
             file_sys/archive_extsavedata.cpp
             file_sys/archive_romfs.cpp
             file_sys/archive_savedata.cpp
@@ -106,6 +107,7 @@ set(HEADERS
             arm/skyeye_common/vfp/vfp.h
             arm/skyeye_common/vfp/vfp_helper.h
             arm/arm_interface.h
+            debugger/debug_interface.h
             file_sys/archive_backend.h
             file_sys/archive_extsavedata.h
             file_sys/archive_romfs.h

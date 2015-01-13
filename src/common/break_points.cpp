@@ -3,7 +3,6 @@
 // Refer to the license.txt file included.
 
 #include "common/common.h"
-#include "common/debug_interface.h"
 #include "common/break_points.h"
 
 #include <sstream>
@@ -176,11 +175,12 @@ TMemCheck *MemChecks::GetMemCheck(u32 address)
 void TMemCheck::Action(DebugInterface *debug_interface, u32 iValue, u32 addr,
                         bool write, int size, u32 pc)
 {
-    if ((write && OnWrite) || (!write && OnRead))
+    // it's unused for now anyway
+/*    if ((write && OnWrite) || (!write && OnRead))
     {
         if (Log)
         {
-            LOG_DEBUG(Debug_Breakpoint, "CHK %08x (%s) %s%i %0*x at %08x (%s)",
+           LOG_DEBUG(Debug_Breakpoint, "CHK %08x (%s) %s%i %0*x at %08x (%s)",
                 pc, debug_interface->getDescription(pc).c_str(),
                 write ? "Write" : "Read", size*8, size*2, iValue, addr,
                 debug_interface->getDescription(addr).c_str()
@@ -188,5 +188,5 @@ void TMemCheck::Action(DebugInterface *debug_interface, u32 iValue, u32 addr,
         }
         if (Break)
             debug_interface->breakNow();
-    }
+    }*/
 }

@@ -36,7 +36,6 @@ set(HEADERS
             common_types.h
             concurrent_ring_buffer.h
             cpu_detect.h
-            debug_interface.h
             emu_window.h
             expression_parser.h
             extended_trace.h
