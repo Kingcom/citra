@@ -6,6 +6,8 @@
 #include <QFont>
 #include <QPoint>
 
+#include "common/common_types.h"
+
 // Abstracts font calculations used by some
 // debugger widgets
 class DebuggerFont {
@@ -31,3 +33,5 @@ private:
     int height;
     int descent;
 };
+
+bool parseExpression(QString& exp, u32& dest);

@@ -5,6 +5,9 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QShortcut>
+#include <QApplication>
+#include <QClipboard>
+#include <QInputDialog>
 
 #include "core/debugger/debug_interface.h"
 
@@ -29,13 +32,17 @@ RegisterView::RegisterView(QWidget* parent) : QFrame(parent) {
     last_pc = 0;
     selection = 0;
 
-    QShortcut* up_shortcut = new QShortcut(QKeySequence(Qt::Key_Up), this);
+    QShortcut* up_shortcut = new QShortcut(QKeySequence("Up"), this);
     up_shortcut->setContext(Qt::WidgetShortcut);
-    connect(up_shortcut, SIGNAL(activated()), this, SLOT(previousRegister()));
+    connect(up_shortcut, SIGNAL(activated()), this, SLOT(moveSelectionUp()));
 
-    QShortcut* down_shortcut = new QShortcut(QKeySequence(Qt::Key_Down), this);
+    QShortcut* down_shortcut = new QShortcut(QKeySequence("Down"), this);
     down_shortcut->setContext(Qt::WidgetShortcut);
-    connect(down_shortcut, SIGNAL(activated()), this, SLOT(nextRegister()));
+    connect(down_shortcut, SIGNAL(activated()), this, SLOT(moveSelectionDown()));
+    
+    QShortcut* copy_shortcut = new QShortcut(QKeySequence("Ctrl+C"), this);
+    down_shortcut->setContext(Qt::WidgetShortcut);
+    connect(copy_shortcut, SIGNAL(activated()), this, SLOT(copyRegisterValue()));
 
     setFocusPolicy(Qt::FocusPolicy::ClickFocus);
 }
@@ -157,6 +164,11 @@ void RegisterView::mouseMoveEvent(QMouseEvent* event) {
     }
 }
 
+void RegisterView::mouseDoubleClickEvent(QMouseEvent* event) {
+    if (event->button() == Qt::MouseButton::LeftButton)
+        editRegisterValue();
+}
+
 void RegisterView::moveSelectionUp() {
     selection = qMax<int>(0, selection - 1);
     update();
@@ -165,4 +177,28 @@ void RegisterView::moveSelectionUp() {
 void RegisterView::moveSelectionDown() {
     selection = qMin<int>(registers.size() - 1, selection + 1);
     update();
+}
+
+void RegisterView::copyRegisterValue() {
+    QString value;
+
+    Register& reg = registers[selection];
+    value.sprintf("0x%08X", g_debug->GetRegValue(reg.category, reg.index));
+    QApplication::clipboard()->setText(value);
+}
+
+void RegisterView::editRegisterValue() {
+    QString value;
+
+    Register& reg = registers[selection];
+    value.sprintf("0x%08X", g_debug->GetRegValue(reg.category, reg.index));
+
+    QString result = QInputDialog::getText(this,"Input value","Input new value",QLineEdit::EchoMode::Normal,value);
+
+    u32 newValue;
+    if (!result.isEmpty() && parseExpression(result,newValue)) {
+        g_debug->SetRegValue(reg.category,reg.index,newValue);
+        emit registerValueChanged();
+        update();
+    }
 }

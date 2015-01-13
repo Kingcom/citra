@@ -16,6 +16,7 @@ protected:
     void paintEvent(QPaintEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
+    void mouseDoubleClickEvent(QMouseEvent* event) override;
 
 private slots:
     // Select previous register
@@ -23,6 +24,16 @@ private slots:
 
     // Select next register 
     void moveSelectionDown();
+
+    // Copies a string representation of the selected
+    // register's value to the clipboard
+    void copyRegisterValue();
+
+    void editRegisterValue();
+
+signals:
+    // Emitted when the value of a register was changed by the user
+    void registerValueChanged();
 
 private:
     // Reloads register values if necessary

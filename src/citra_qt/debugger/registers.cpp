@@ -24,6 +24,9 @@ RegistersWidget::RegistersWidget(QWidget* parent) : QDockWidget(parent)
     }
 
     cpu_regs_ui.flags->addItem(new QSpacerItem(0,0,QSizePolicy::Minimum,QSizePolicy::Expanding));
+
+    // reload cpsr flags when register values have been changed
+    connect(cpu_regs_ui.registerView,SIGNAL(registerValueChanged()),this,SLOT(OnDebugModeEntered()));
 }
 
 void RegistersWidget::OnFlagToggled(int state)

@@ -4,6 +4,8 @@
 
 #include <QFontMetrics>
 
+#include "core/debugger/debug_interface.h"
+
 #include "util.h"
 
 DebuggerFont::DebuggerFont() {
@@ -26,4 +28,13 @@ void DebuggerFont::updateMetrics() {
     width = metrics.width('0');
     height = metrics.height();
     descent = metrics.descent();
+}
+
+
+bool parseExpression(QString& exp, u32& dest) {
+	PostfixExpression postfix;
+	if (!g_debug->InitExpression(exp.toLatin1().data(),postfix))
+		return false;
+
+	return g_debug->ParseExpression(postfix,dest);
 }
