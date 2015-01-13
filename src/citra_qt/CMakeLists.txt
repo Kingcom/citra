@@ -13,6 +13,8 @@ set(SRCS
             debugger/graphics_framebuffer.cpp
             debugger/ramview.cpp
             debugger/registers.cpp
+            debugger/register_view.cpp
+            debugger/util.cpp
             util/spinbox.cpp
             bootmanager.cpp
             hotkeys.cpp
@@ -33,6 +35,8 @@ set(HEADERS
             debugger/graphics_framebuffer.h
             debugger/ramview.h
             debugger/registers.h
+            debugger/register_view.h
+            debugger/util.h
             util/spinbox.h
             bootmanager.h
             hotkeys.h

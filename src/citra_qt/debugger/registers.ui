@@ -14,27 +14,41 @@
    <string>ARM Registers</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QTreeWidget" name="treeWidget">
-      <property name="alternatingRowColors">
-       <bool>true</bool>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="RegisterView" name="registerView">
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
       </property>
-      <column>
-       <property name="text">
-        <string>Register</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value</string>
-       </property>
-      </column>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="lineWidth">
+       <number>1</number>
+      </property>
+      <property name="midLineWidth">
+       <number>3</number>
+      </property>
      </widget>
+    </item>
+    <item row="0" column="1">
+     <layout class="QVBoxLayout" name="flags">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+     </layout>
     </item>
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RegisterView</class>
+   <extends>QFrame</extends>
+   <header>debugger/register_view.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

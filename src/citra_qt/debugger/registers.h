@@ -6,8 +6,11 @@
 
 #include <QDockWidget>
 #include <QTreeWidgetItem>
+#include <QMap>
+#include <QCheckBox>
 
 class QTreeWidget;
+
 
 class RegistersWidget : public QDockWidget
 {
@@ -19,12 +22,9 @@ public:
 public slots:
     void OnDebugModeEntered();
     void OnDebugModeLeft();
+    void OnFlagToggled(int state);
 
 private:
+    QMap<QCheckBox*,int> flagLookup;
     Ui::ARMRegisters cpu_regs_ui;
-
-    QTreeWidget* tree;
-
-    QTreeWidgetItem* registers;
-    QTreeWidgetItem* CSPR;
 };
